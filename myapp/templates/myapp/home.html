@@ -1,0 +1,62 @@
+
+
+
+{%  extends 'core/base.html' %}
+{% load static %}
+
+
+{% block style %}
+  
+ {% endblock style %}
+
+{% block msg %}
+{% if messages %}
+{% for message in messages %}
+<small {% if messages.tags %} class="{{message.tags}}"  {% endif %}>
+    <span class="{{message.tags}}" >{{ message }}</span>
+</small>
+{% endfor %}
+{% endif %} {% endblock msg %}
+
+{% block content %}
+
+<div class="container-fluid mt-5 ">
+    <div class="py-5 text-center bg-secondary text-white col-sm-4 offset-sm-4">
+        <h1 class="mb-5">Upload Notes</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for f in form %}
+            <div class="m-3 ">
+                {{f}}
+
+            </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-danger" value="Upload">
+        </form>
+    </div>
+    <div class="row">
+        {% for x in img %}
+        <div class="col-sm-4">
+            <div class="card m-2">
+                <div class="">
+                    <small class="">{{x.title}}</small>
+                </div>
+                <img src="{{x.photo.url}}" alt="" class="card-img-top" height="200px">
+                <div class="card-footer">
+                    <small class="text-muted">{{x.date}}</small>
+                </div>
+            </div>
+
+        </div>
+        {% endfor  %}
+    
+    </div>
+</div>
+
+
+ 
+
+
+     
+{% endblock content %}
+        

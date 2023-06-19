@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block style %}
+
+<link rel="stylesheet" href="{% static 'log/css/styledash.css' %}">
+{% endblock style %}
+
+{% block msg %}
+
+
+{% if messages %}
+{% for message in messages %}
+<span>
+
+    {% if messages.tags %} class="{{message.tags}}" {% endif %}
+    <span class="{{message.tags}}"> {{ message }}</span>
+</span>
+
+{% endfor %}
+{% endif %}
+{% endblock msg %}
+
+{% block content %}
+
+<div class="col-sm-12 profile">
+
+    <div class="second">
+
+        {% if request.user.is_superuser %}
+        <a href="{% url 'adminprofile' %}" class="btn btn-outline-info">Profile</a>
+        {% else %}
+        <a href="{% url 'profile' %}" class="btn btn-outline-info">Profile</a>
+
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="btn btn-outline-success">Upload Notes</a>
+
+
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger">log out</a>
+    </div>
+</div>
+
+
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-7 heading">
+            <h1 class="head">{{request.user}}</h1>
+            <p class="para">Welcome To Your Notes Library</p>
+        </div>
+      
+    </div>
+    <div class="row ">
+        <div class=" rows">
+            {% for f in file %}
+            <div class="col-sm-4">
+                <div class="card m-2">
+                    <span>Title : {{f.title}} </span>
+                    <img src="{{f.file.url}}" alt="Right click + Open in new tab to view" class="card-img-top" height="200px">
+                    <span>Date : {{f.date}} </span>
+
+                </div>
+            </div>
+        
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
